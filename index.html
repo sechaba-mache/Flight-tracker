@@ -1,95 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://kit.fontawesome.com/1ff1c38577.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-    crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-    crossorigin=""></script>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://kit.fontawesome.com/1ff1c38577.js" crossorigin="anonymous"></script>
 
-    <title>Flight tracker</title>
-  </head>
-  <body>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
 
-    <div class="sidebar">
+  <title>Flight tracker</title>
+</head>
+
+<body>
+
+  <div class="logo">
+    <img src="wheres-elon-logo_1_-removebg-preview.png" alt="Where's Elon. It's a play on Where's Waldo" width="15%"
+      height="120%">
+  </div>
+
+  <div class="content">
+
+  </div>
+
+  <div class="grid">
+    <div id="my-map">
 
     </div>
-
-    <div class="logo">
-
-    </div>
-
-    <div class="content">
-      <div class="box">
-        <i class="fa-solid fa-plane-departure"></i>
-        <h3 class="from">From: Switzerland</h3>
-        <p class="long">Longitude: 836287648</p>
-        <p class="lat">Longitude: 836287648</p>
-        <p class="cat">Category: iufhsfhuehfsehf</p>
-      </div>
-
-      <div class="box">
-        <i class="fa-solid fa-plane-arrival"></i>
-      </div>
-
-      <div class="box">
-
-      </div>
-      
-      <div class="box">
-
-      </div>
-
-      <div class="box">
-
-      </div>
-
-      <div class="box">
-
-      </div>
-      <div class="box">
-
-      </div>
-
-      <div class="box">
-
-      </div>
-
-      <div class="box">
-
-      </div>
+  </div>
 
 
-      <div class="box">
+  <script type="module" src="/main.js"></script>
+</body>
 
-      </div>
-
-      <div class="box">
-
-      </div>
-
-      <div class="box">
-
-      </div>
-
-      <div class="box">
-
-      </div>
-    </div>
-
-    <div class="grid">
-      <div id="map">
-        
-      </div>
-    </div>
-
-
-    <script type="module" src="/main.js"></script>
-  </body>
 </html>
