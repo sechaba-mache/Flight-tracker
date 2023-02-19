@@ -36,69 +36,76 @@ function insertFlights() {
 	//For When requests are available
 	//Add corner cases
 	//nullish coalescing english!!!!!
-	// getFlights().then((res) => {
-	// 	if (res != 0) {
-	// 		for (let flight of res) {
-	// 			const boxes = document.createElement("div");
-	// 			boxes.className = "box";
-	// 			boxes.setAttribute("focus", false);
+	getFlights()
+		.then((res) => {
+			if (res != 0 || res == undefined) {
+				for (let flight of res) {
+					const boxes = document.createElement("div");
+					boxes.className = "box";
+					boxes.setAttribute("focus", false);
 
-	// 			const icon = flight[8]
-	// 				? `<i class="fa-solid fa-plane-departure" style="color: blue"></i>`
-	// 				: `<i class="fa-solid fa-plane-arrival" style="color: red"></i>`;
-	// 			const from = flight[2];
-	// 			const longitude = flight[5];
-	// 			const latitude = flight[6];
-	// 			const category = flight[17];
+					const icon = flight[8]
+						? `<i class="fa-solid fa-plane-departure" style="color: blue"></i>`
+						: `<i class="fa-solid fa-plane-arrival" style="color: red"></i>`;
+					const from = flight[2];
+					const longitude = flight[5];
+					const latitude = flight[6];
+					const category = flight[17];
 
-	// 			boxes.innerHTML =
-	// 				icon +
-	// 				`<h3 class="from">${from}</h3>
-	// 		<p class="long">Longitude: ${longitude}</p>
-	// 		<p class="lat">Latitude: ${latitude}</p>
-	// 		<p class="cat">Category: ${flightCategories[category]}</p>`;
-	// 			boxes.dataset.longitude = longitude;
-	// 			boxes.dataset.latitude = latitude;
+					boxes.innerHTML =
+						icon +
+						`<h3 class="from">${from}</h3>
+			<p class="long">Longitude: ${longitude}</p>
+			<p class="lat">Latitude: ${latitude}</p>
+			<p class="cat">Category: ${flightCategories[category]}</p>`;
+					boxes.dataset.longitude = longitude;
+					boxes.dataset.latitude = latitude;
 
-	// 			boxes.addEventListener("click", openMap);
-	// 			content.append(boxes);
-	// 		}
-	// 	} else {
-	// 		const noFlights = document.createElement("div");
-	// 		noFlights.innerHTML = `<h1>No flights to display</h1>`;
-	// 		content.append(noFlights);
-	// 	}
-	// });
+					boxes.addEventListener("click", openMap);
+					content.append(boxes);
+				}
+			} else {
+				const noFlights = document.createElement("div");
+				noFlights.innerHTML = `<h1>No flights to display</h1>`;
+				content.append(noFlights);
+			}
+		})
+		.catch((err) => {
+			console.error(err);
+			const noFlights = document.createElement("div");
+			noFlights.innerHTML = `<h1>An error has occured while fetching flight data.</h1>`;
+			content.append(noFlights);
+		});
 
 	//for when they are unavailable
-	let flights = mockFlights();
-	for (var i = 0; i < flights.length; i++) {
-		const boxes = document.createElement("div");
-		boxes.className = "box";
-		boxes.setAttribute("focus", false);
+	// let flights = mockFlights();
+	// for (var i = 0; i < flights.length; i++) {
+	// 	const boxes = document.createElement("div");
+	// 	boxes.className = "box";
+	// 	boxes.setAttribute("focus", false);
 
-		const icon = flights[i][8]
-			? `<i class="fa-solid fa-plane-departure" style="color: blue"></i>`
-			: `<i class="fa-solid fa-plane-arrival" style="color: red"></i>`;
-		const from = flights[i][2];
-		const longitude = flights[i][5];
-		const latitude = flights[i][6];
-		const category = flights[i][16];
+	// 	const icon = flights[i][8]
+	// 		? `<i class="fa-solid fa-plane-departure" style="color: blue"></i>`
+	// 		: `<i class="fa-solid fa-plane-arrival" style="color: red"></i>`;
+	// 	const from = flights[i][2];
+	// 	const longitude = flights[i][5];
+	// 	const latitude = flights[i][6];
+	// 	const category = flights[i][16];
 
-		console.log(category);
+	// 	console.log(category);
 
-		boxes.innerHTML =
-			icon +
-			`<h3 class="from">${from}</h3>
-	    <p class="long">Longitude: ${longitude}</p>
-	    <p class="lat">Latitude: ${latitude}</p>
-	    <p class="cat">Category: ${flightCategories[category]}</p>`;
-		boxes.dataset.longitude = longitude;
-		boxes.dataset.latitude = latitude;
+	// 	boxes.innerHTML =
+	// 		icon +
+	// 		`<h3 class="from">${from}</h3>
+	//     <p class="long">Longitude: ${longitude}</p>
+	//     <p class="lat">Latitude: ${latitude}</p>
+	//     <p class="cat">Category: ${flightCategories[category]}</p>`;
+	// 	boxes.dataset.longitude = longitude;
+	// 	boxes.dataset.latitude = latitude;
 
-		boxes.addEventListener("click", openMap);
-		content.append(boxes);
-	}
+	// 	boxes.addEventListener("click", openMap);
+	// 	content.append(boxes);
+	// }
 }
 
 function openMap() {
