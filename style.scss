@@ -14,6 +14,7 @@ html {
 		position: fixed;
 		width: 100vw;
 		height: 8vh;
+		// aspect-ratio: 100 / 5; //Did not use because it makes the size of the logo very squished as the screen gets smaller
 		background-color: rgb(0, 6, 97);
 		z-index: 2;
 		display: flex;
@@ -21,6 +22,16 @@ html {
 		align-items: center;
 		flex-grow: 0;
 		flex-shrink: 0;
+
+		.plane {
+			width: 80px;
+			height: 90%;
+		}
+
+		.name {
+			width: 200px;
+			height: 100%;
+		}
 	}
 
 	.content {
@@ -118,9 +129,9 @@ html {
 }
 
 @media screen and (min-width: 1024px) {
-	.content {
-		margin-top: 10vh;
-	}
+	// .content {
+	// 	margin-top: 10vh;
+	// }
 }
 
 @media screen and (min-width: 1280px) {
