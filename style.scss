@@ -59,7 +59,7 @@ html {
 		}
 
 		.box:hover {
-			scale: 1.1;
+			scale: 1.1 !important; //used because javascript overwrites uses inline style for the box element and all styling done there takes priority over css
 			cursor: pointer;
 		}
 
@@ -158,9 +158,6 @@ html {
 }
 
 @media screen and (min-width: 1024px) {
-	// .content {
-	// 	margin-top: 10vh;
-	// }
 }
 
 @media screen and (min-width: 1280px) {

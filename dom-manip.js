@@ -33,38 +33,37 @@ function insertFlights() {
 	body.setAttribute("focus", true);
 	const content = document.querySelector(".content");
 
-	//For When requests are available
-	//Add corner cases
-	//nullish coalescing english!!!!!
 	getFlights()
 		.then((res) => {
 			if (res != 0 || res == undefined) {
 				for (let flight of res) {
-					const boxes = document.createElement("div");
-					boxes.className = "box";
-					boxes.setAttribute("focus", false);
+					if (flight[5] != null || flight[6] != null) {
+						const boxes = document.createElement("div");
+						boxes.className = "box";
+						boxes.setAttribute("focus", false);
 
-					const icon = flight[8]
-						? `<i class="fa-solid fa-plane-departure" style="color: blue"></i>`
-						: `<i class="fa-solid fa-plane-arrival" style="color: red"></i>`;
-					const callsign = flight[1];
-					const from = flight[2];
-					const longitude = flight[5];
-					const latitude = flight[6];
-					const category = flight[17];
+						const icon = flight[8]
+							? `<i class="fa-solid fa-plane-departure" style="color: blue"></i>`
+							: `<i class="fa-solid fa-plane-arrival" style="color: red"></i>`;
+						const callsign = flight[1];
+						const from = flight[2];
+						const longitude = flight[5];
+						const latitude = flight[6];
+						const category = flight[17];
 
-					boxes.innerHTML =
-						icon +
-						`<h3 class="callsign">Callsign: ${callsign}</h3>
-						<h3 class="from">From: ${from}</h3>
-			<p class="long">Longitude: ${longitude}</p>
-			<p class="lat">Latitude: ${latitude}</p>
-			<p class="cat">Category: ${flightCategories[category]}</p>`;
-					boxes.dataset.longitude = longitude;
-					boxes.dataset.latitude = latitude;
+						boxes.innerHTML =
+							icon +
+							`<h3 class="callsign">Callsign: ${callsign}</h3>
+                            <h3 class="from">From: ${from}</h3>
+                            <p class="long">Longitude: ${longitude}</p>
+                            <p class="lat">Latitude: ${latitude}</p>
+                            <p class="cat">Category: ${flightCategories[category]}</p>`;
+						boxes.dataset.longitude = longitude;
+						boxes.dataset.latitude = latitude;
 
-					boxes.addEventListener("click", openMap);
-					content.append(boxes);
+						boxes.addEventListener("click", openMap);
+						content.append(boxes);
+					}
 				}
 			} else {
 				const noFlights = document.createElement("div");
@@ -115,6 +114,7 @@ function openMap() {
 	const boxes = document.getElementsByClassName("box");
 	for (let i = 0; i < boxes.length; i++) {
 		boxes[i].style.zIndex = 0;
+		boxes[i].style.scale = 0.7;
 	}
 
 	const mymap = document.querySelector("#my-map");
@@ -139,6 +139,7 @@ function closeMap() {
 	const boxes = document.getElementsByClassName("box");
 	for (let i = 0; i < boxes.length; i++) {
 		boxes[i].style.zIndex = 1;
+		boxes[i].style.scale = 1;
 	}
 }
 
