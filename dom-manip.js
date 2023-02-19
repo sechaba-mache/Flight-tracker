@@ -124,11 +124,17 @@ function openMap() {
 
 	map.invalidateSize();
 	map.flyTo([this.dataset.latitude, this.dataset.longitude], 13);
+
+	const mapCloseInstructions = document.querySelector(".mapCloseInstructions");
+	mapCloseInstructions.style.display = "flex";
 }
 
 function closeMap() {
 	const myMap = document.querySelector("#my-map");
 	myMap.style.display = "none";
+
+	const mapCloseInstructions = document.querySelector(".mapCloseInstructions");
+	mapCloseInstructions.style.display = "none";
 
 	const boxes = document.getElementsByClassName("box");
 	for (let i = 0; i < boxes.length; i++) {
