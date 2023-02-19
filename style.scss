@@ -5,7 +5,10 @@ html {
 		display: flex;
 		flex-wrap: wrap;
 		flex-grow: 0;
-		background-color: rgb(218, 238, 255);
+		background-color: aliceblue;
+		font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+			Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+			sans-serif;
 	}
 }
 
@@ -15,7 +18,7 @@ html {
 		width: 100vw;
 		height: 8vh;
 		// aspect-ratio: 100 / 5; //Did not use because it makes the size of the logo very squished as the screen gets smaller
-		background-color: rgb(0, 6, 97);
+		background-color: #221d23;
 		z-index: 2;
 		display: flex;
 		justify-content: center;
@@ -52,9 +55,9 @@ html {
 			margin-top: 40px;
 			width: 40vw;
 			height: 20vh;
-			background-color: #7cb9e8;
+			background-color: #6290c8;
 			border-radius: 10px;
-			box-shadow: 0px 4px 16px rgb(0, 0, 0, 0.5); // val 1 = horizontal, val 2 = vertical, val 3 = spread
+			box-shadow: 0px 4px 16px #221d23; // val 1 = horizontal, val 2 = vertical, val 3 = spread
 			transition: all ease-in-out 200ms; // When adding this it makes responsiveness look jagged, you can see it transition from one scale to the other
 		}
 
@@ -68,7 +71,7 @@ html {
 			justify-content: center;
 			align-content: center;
 			margin: 0;
-			border-bottom: 2px solid rgb(72, 72, 72);
+			border-bottom: 2px solid #221d23;
 		}
 
 		.box i {
@@ -85,13 +88,13 @@ html {
 		.box .from {
 			grid-area: 2 / 1 / 3 / 2;
 			font-size: 12px;
-			border-right: 2px solid rgb(72, 72, 72);
+			border-right: 2px solid #221d23;
 		}
 
 		.box .long {
 			grid-area: 3 / 1 / 4 / 2;
 			font-size: 10px;
-			border-right: 2px solid rgb(72, 72, 72);
+			border-right: 2px solid #221d23;
 		}
 
 		.box .lat {
