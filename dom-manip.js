@@ -47,6 +47,7 @@ function insertFlights() {
 					const icon = flight[8]
 						? `<i class="fa-solid fa-plane-departure" style="color: blue"></i>`
 						: `<i class="fa-solid fa-plane-arrival" style="color: red"></i>`;
+					const callsign = flight[1];
 					const from = flight[2];
 					const longitude = flight[5];
 					const latitude = flight[6];
@@ -54,7 +55,8 @@ function insertFlights() {
 
 					boxes.innerHTML =
 						icon +
-						`<h3 class="from">${from}</h3>
+						`<h3 class="callsign">Callsign: ${callsign}</h3>
+						<h3 class="from">From: ${from}</h3>
 			<p class="long">Longitude: ${longitude}</p>
 			<p class="lat">Latitude: ${latitude}</p>
 			<p class="cat">Category: ${flightCategories[category]}</p>`;
@@ -96,7 +98,8 @@ function insertFlights() {
 
 	// 	boxes.innerHTML =
 	// 		icon +
-	// 		`<h3 class="from">${from}</h3>
+	//      `<h3 class="callsign">Callsign: ${callsign}</h3>
+	//      <h3 class="from">From: ${from}</h3>
 	//     <p class="long">Longitude: ${longitude}</p>
 	//     <p class="lat">Latitude: ${latitude}</p>
 	//     <p class="cat">Category: ${flightCategories[category]}</p>`;
