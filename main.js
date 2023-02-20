@@ -5,3 +5,4 @@ import { loadMap } from "./map.js";
 import "./style.scss";
 
 insertFlights();
+setInterval(insertFlights, 30000);
