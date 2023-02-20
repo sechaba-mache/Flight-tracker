@@ -4,8 +4,19 @@ async function getFlights() {
 	)
 		.then((res) => res.json())
 		.catch((err) => console.error(err));
+	if (allFlights != 0) {
+		const filtered = allFlights.states.filter(getNonNulls);
 
-	return allFlights.states.slice(0, 20);
+		return filtered.slice(0, 20);
+	} else {
+		return 0;
+	}
+}
+
+function getNonNulls(flight) {
+	if (flight[5] != null && flight[6] != null) {
+		return flight;
+	}
 }
 
 function mockFlights() {

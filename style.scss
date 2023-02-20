@@ -58,7 +58,7 @@ html {
 			background-color: #6290c8;
 			border-radius: 10px;
 			box-shadow: 0px 4px 16px #221d23; // val 1 = horizontal, val 2 = vertical, val 3 = spread
-			transition: all ease-in-out 200ms; // When adding this it makes responsiveness look jagged, you can see it transition from one scale to the other
+			transition: all ease-in-out 300ms; // When adding this it makes responsiveness look jagged, you can see it transition from one scale to the other
 		}
 
 		.box:hover {
