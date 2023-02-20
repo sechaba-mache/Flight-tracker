@@ -29,84 +29,134 @@ const flightCategories = [
 ];
 
 function insertFlights() {
-	const body = document.querySelector("body");
-	body.setAttribute("focus", true);
 	const content = document.querySelector(".content");
+	const existingBoxElements = document.querySelectorAll(".box *");
+	if (existingBoxElements.length > 0) {
+		Array.from(existingBoxElements).map((box) => box.remove());
 
-	getFlights()
-		.then((res) => {
-			if (res != 0 || res == undefined) {
-				for (let flight of res) {
-					if (flight[5] != null || flight[6] != null) {
-						const boxes = document.createElement("div");
-						boxes.className = "box";
-						boxes.setAttribute("focus", false);
+		let i = 0;
+		getFlights()
+			.then((res) => {
+				console.log(res);
+				if (res != 0 || res != undefined) {
+					const boxes = document.querySelectorAll(".box");
 
-						const icon = flight[8]
-							? `<i class="fa-solid fa-plane-departure" style="color: blue"></i>`
-							: `<i class="fa-solid fa-plane-arrival" style="color: red"></i>`;
-						const callsign = flight[1];
-						const from = flight[2];
-						const longitude = flight[5];
-						const latitude = flight[6];
-						const category = flight[17];
+					for (let flight of res) {
+						if (flight[5] != null || flight[6] != null) {
+							const icon = flight[8]
+								? `<i class="fa-solid fa-plane-departure" style="color: blue"></i>`
+								: `<i class="fa-solid fa-plane-arrival" style="color: red"></i>`;
+							const callsign = flight[1];
+							const from = flight[2];
+							const longitude = flight[5];
+							const latitude = flight[6];
+							const category = flight[17];
 
-						boxes.innerHTML =
-							icon +
-							`<h3 class="callsign">Callsign: ${callsign}</h3>
-                            <h3 class="from">From: ${from}</h3>
-                            <p class="long">Longitude: ${longitude}</p>
-                            <p class="lat">Latitude: ${latitude}</p>
-                            <p class="cat">Category: ${flightCategories[category]}</p>`;
-						boxes.dataset.longitude = longitude;
-						boxes.dataset.latitude = latitude;
+							boxes[i].innerHTML =
+								icon +
+								`<h3 class="callsign">Callsign: ${callsign}</h3>
+	                        <h3 class="from">From: ${from}</h3>
+	                        <p class="long">Longitude: ${longitude}</p>
+	                        <p class="lat">Latitude: ${latitude}</p>
+	                        <p class="cat">Category: ${flightCategories[category]}</p>`;
+							boxes[i].dataset.longitude = longitude;
+							boxes[i].dataset.latitude = latitude;
 
-						boxes.addEventListener("click", openMap);
-						content.append(boxes);
+							boxes[i].addEventListener("click", openMap);
+							i++;
+						}
 					}
+				} else {
+					const boxes = document.querySelectorAll(".box");
+					Array.from(boxes).map((box) => box.remove());
+
+					const noFlights = document.createElement("div");
+					noFlights.innerHTML = `<h1>No flights to display</h1>`;
+					content.append(noFlights);
 				}
-			} else {
+			})
+			.catch((err) => {
+				console.error(err);
 				const noFlights = document.createElement("div");
-				noFlights.innerHTML = `<h1>No flights to display</h1>`;
+				noFlights.innerHTML = `<h1>An error has occured while fetching flight data.</h1>`;
 				content.append(noFlights);
-			}
-		})
-		.catch((err) => {
-			console.error(err);
-			const noFlights = document.createElement("div");
-			noFlights.innerHTML = `<h1>An error has occured while fetching flight data.</h1>`;
-			content.append(noFlights);
-		});
+			});
+	} else {
+		getFlights()
+			.then((res) => {
+				if (res != 0 || res == undefined) {
+					for (let flight of res) {
+						if (flight[5] != null || flight[6] != null) {
+							const boxes = document.createElement("div");
+							boxes.className = "box";
+							boxes.setAttribute("focus", false);
 
-	//for when they are unavailable
+							const icon = flight[8]
+								? `<i class="fa-solid fa-plane-departure" style="color: blue"></i>`
+								: `<i class="fa-solid fa-plane-arrival" style="color: red"></i>`;
+							const callsign = flight[1];
+							const from = flight[2];
+							const longitude = flight[5];
+							const latitude = flight[6];
+							const category = flight[17];
+
+							boxes.innerHTML =
+								icon +
+								`<h3 class="callsign">Callsign: ${callsign}</h3>
+								<h3 class="from">From: ${from}</h3>
+								<p class="long">Longitude: ${longitude}</p>
+								<p class="lat">Latitude: ${latitude}</p>
+								<p class="cat">Category: ${flightCategories[category]}</p>`;
+							boxes.dataset.longitude = longitude;
+							boxes.dataset.latitude = latitude;
+
+							boxes.addEventListener("click", openMap);
+							content.append(boxes);
+						}
+					}
+				} else {
+					const noFlights = document.createElement("div");
+					noFlights.innerHTML = `<h1>No flights to display</h1>`;
+					content.append(noFlights);
+				}
+			})
+			.catch((err) => {
+				console.error(err);
+				const noFlights = document.createElement("div");
+				noFlights.innerHTML = `<h1>An error has occured while fetching flight data.</h1>`;
+				content.append(noFlights);
+			});
+	}
+	// for when they are unavailable
 	// let flights = mockFlights();
-	// for (var i = 0; i < flights.length; i++) {
-	// 	const boxes = document.createElement("div");
-	// 	boxes.className = "box";
-	// 	boxes.setAttribute("focus", false);
+	// for (let flight of flights) {
+	// 	if (flight[5] != null || flight[6] != null) {
+	// 		const boxes = document.createElement("div");
+	// 		boxes.className = "box";
+	// 		boxes.setAttribute("focus", false);
 
-	// 	const icon = flights[i][8]
-	// 		? `<i class="fa-solid fa-plane-departure" style="color: blue"></i>`
-	// 		: `<i class="fa-solid fa-plane-arrival" style="color: red"></i>`;
-	// 	const from = flights[i][2];
-	// 	const longitude = flights[i][5];
-	// 	const latitude = flights[i][6];
-	// 	const category = flights[i][16];
+	// 		const icon = flight[8]
+	// 			? `<i class="fa-solid fa-plane-departure" style="color: blue"></i>`
+	// 			: `<i class="fa-solid fa-plane-arrival" style="color: red"></i>`;
+	// 		const callsign = flight[1];
+	// 		const from = flight[2];
+	// 		const longitude = flight[5];
+	// 		const latitude = flight[6];
+	// 		const category = flight[17];
 
-	// 	console.log(category);
+	// 		boxes.innerHTML =
+	// 			icon +
+	// 			`<h3 class="callsign">Callsign: ${callsign}</h3>
+	// 			<h3 class="from">From: ${from}</h3>
+	// 			<p class="long">Longitude: ${longitude}</p>
+	// 			<p class="lat">Latitude: ${latitude}</p>
+	// 			<p class="cat">Category: ${flightCategories[category]}</p>`;
+	// 		boxes.dataset.longitude = longitude;
+	// 		boxes.dataset.latitude = latitude;
 
-	// 	boxes.innerHTML =
-	// 		icon +
-	//      `<h3 class="callsign">Callsign: ${callsign}</h3>
-	//      <h3 class="from">From: ${from}</h3>
-	//     <p class="long">Longitude: ${longitude}</p>
-	//     <p class="lat">Latitude: ${latitude}</p>
-	//     <p class="cat">Category: ${flightCategories[category]}</p>`;
-	// 	boxes.dataset.longitude = longitude;
-	// 	boxes.dataset.latitude = latitude;
-
-	// 	boxes.addEventListener("click", openMap);
-	// 	content.append(boxes);
+	// 		boxes.addEventListener("click", openMap);
+	// 		content.append(boxes);
+	// 	}
 	// }
 }
 
