@@ -30,17 +30,22 @@ const flightCategories = [
 
 function insertFlights() {
 	const content = document.querySelector(".content");
-	const existingBoxElements = document.querySelectorAll(".box *");
-	if (existingBoxElements.length > 0) {
-		Array.from(existingBoxElements).map((box) => box.remove());
+	const existingBoxElementsContent = document.querySelectorAll(".box *");
+	const boxes = document.querySelectorAll(".box");
+
+	const errorMessage = document.querySelector(".error");
+	if (errorMessage != null) {
+		errorMessage.remove();
+	}
+
+	if (boxes.length > 0) {
+		Array.from(existingBoxElementsContent).map((box) => box.remove());
 
 		let i = 0;
+
 		getFlights()
 			.then((res) => {
-				console.log(res);
-				if (res != 0 || res != undefined) {
-					const boxes = document.querySelectorAll(".box");
-
+				if (res != 0 && res != undefined) {
 					for (let flight of res) {
 						if (flight[5] != null || flight[6] != null) {
 							const icon = flight[8]
@@ -67,17 +72,22 @@ function insertFlights() {
 						}
 					}
 				} else {
-					const boxes = document.querySelectorAll(".box");
-					Array.from(boxes).map((box) => box.remove());
+					const boxesToClear = document.querySelectorAll(".content *");
+					Array.from(boxesToClear).map((box) => box.remove());
 
 					const noFlights = document.createElement("div");
+					noFlights.className = "error";
 					noFlights.innerHTML = `<h1>No flights to display</h1>`;
 					content.append(noFlights);
 				}
 			})
 			.catch((err) => {
+				const boxesToClear = document.querySelectorAll(".content *");
+				Array.from(boxesToClear).map((box) => box.remove());
+
 				console.error(err);
 				const noFlights = document.createElement("div");
+				noFlights.className = "error";
 				noFlights.innerHTML = `<h1>An error has occured while fetching flight data.</h1>`;
 				content.append(noFlights);
 			});
@@ -89,7 +99,6 @@ function insertFlights() {
 						if (flight[5] != null || flight[6] != null) {
 							const boxes = document.createElement("div");
 							boxes.className = "box";
-							boxes.setAttribute("focus", false);
 
 							const icon = flight[8]
 								? `<i class="fa-solid fa-plane-departure" style="color: blue"></i>`
@@ -116,6 +125,7 @@ function insertFlights() {
 					}
 				} else {
 					const noFlights = document.createElement("div");
+					noFlights.className = "error";
 					noFlights.innerHTML = `<h1>No flights to display</h1>`;
 					content.append(noFlights);
 				}
@@ -123,6 +133,7 @@ function insertFlights() {
 			.catch((err) => {
 				console.error(err);
 				const noFlights = document.createElement("div");
+				noFlights.className = "error";
 				noFlights.innerHTML = `<h1>An error has occured while fetching flight data.</h1>`;
 				content.append(noFlights);
 			});
