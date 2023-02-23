@@ -2,6 +2,7 @@ import "./flights.js";
 import "./map.js";
 import { mockFlights, getFlights } from "./flights.js";
 import { loadMap, addMarker } from "./map.js";
+import { storeFlightInfo } from "./storage.js";
 
 const map = loadMap();
 
@@ -36,8 +37,6 @@ const flightCategories = [
 	"Cluster Obstacle",
 	"Line Obstacle",
 ];
-
-localStorage.setItem("flights", JSON.stringify([]));
 
 function insertFlights() {
 	const content = document.querySelector(".content");
@@ -205,35 +204,6 @@ function openMap() {
 	mapCloseInstructions.style.display = "flex";
 
 	storeFlightInfo(this);
-}
-
-function storeFlightInfo(box) {
-	const boxChildren = box.querySelectorAll("*");
-
-	let storage = JSON.parse(localStorage.getItem("flights"));
-
-	let contains = false;
-
-	contains = Array.from(storage).map((element) => {
-		if (element.elements.callsign == boxChildren[1].outerHTML) {
-			return true;
-		}
-	});
-
-	if (contains == false) {
-		storage.push({
-			elements: {
-				callsign: boxChildren[1].outerHTML,
-				from: boxChildren[2].outerHTML,
-			},
-			data: {
-				longitudeValue: box.dataset.longitude,
-				latitudeValue: box.dataset.latitude,
-			},
-		});
-
-		localStorage.setItem("flights", JSON.stringify(storage));
-	}
 }
 
 function closeMap() {
