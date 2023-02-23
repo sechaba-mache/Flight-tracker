@@ -35,6 +35,28 @@ html {
 			width: 200px;
 			height: 100%;
 		}
+
+		.history {
+			position: fixed;
+			left: 0;
+			margin: 50px;
+
+			button {
+				width: 70px;
+				height: 25px;
+				border-radius: 10px;
+				border: none;
+				background-color: #6290c8;
+				color: #221d23;
+				cursor: pointer;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.closeHistoryButton {
+				display: none;
+			}
+		}
 	}
 
 	.content {
@@ -43,8 +65,14 @@ html {
 		display: flex;
 		flex-wrap: wrap;
 		align-content: flex-start;
-		justify-content: space-evenly;
+		justify-content: space-between;
 		opacity: 1;
+
+		.error {
+			display: flex;
+			justify-content: center;
+			width: 100vw;
+		}
 
 		.box {
 			display: grid;
@@ -52,7 +80,7 @@ html {
 			grid-template-columns: 1fr 1fr;
 			grid-template-rows: 30% 1fr 1fr 1fr;
 
-			margin-top: 40px;
+			margin: 40px 25px 0px 25px;
 			width: 40vw;
 			height: 20vh;
 			background-color: #6290c8;
@@ -107,6 +135,40 @@ html {
 			grid-area: 4 / 1 / 5 / 3;
 			font-size: 10px;
 			border-bottom: none;
+		}
+
+		.historyBoxes {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			grid-template-rows: 1fr;
+			justify-content: center;
+			align-items: center;
+			margin: 30px 25px 0px 25px;
+			width: 30vw;
+			height: 80px;
+			border-radius: 20px;
+			background-color: #6290c8;
+			border: 2px solid #221d23;
+			font-size: 12px;
+			cursor: pointer;
+			z-index: 1;
+
+			:first-child {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				grid-area: 1 / 1 / 2 / 2;
+				border-right: 2px solid #221d23;
+				height: 100%;
+			}
+
+			:nth-child(2) {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				grid-area: 1 / 2 / 2 / 3;
+				height: 100%;
+			}
 		}
 	}
 
