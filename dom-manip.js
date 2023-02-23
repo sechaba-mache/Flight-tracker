@@ -5,6 +5,15 @@ import { loadMap, addMarker } from "./map.js";
 
 const map = loadMap();
 
+const historyButton = document.querySelector(".historyButton");
+historyButton.addEventListener("click", openHistory);
+
+const closeHistoryButton = document.querySelector(".closeHistoryButton");
+closeHistoryButton.addEventListener("click", closeHistory);
+
+let historyHeading = document.querySelector(".historyHeading");
+historyHeading.style.display = "none";
+
 const flightCategories = [
 	"No information",
 	"No ADS-B Emitter Category Information",
@@ -28,12 +37,12 @@ const flightCategories = [
 	"Line Obstacle",
 ];
 
-sessionStorage.setItem("flights", JSON.stringify([]));
+localStorage.setItem("flights", JSON.stringify([]));
 
 function insertFlights() {
 	const content = document.querySelector(".content");
-	const existingBoxElementsContent = document.querySelectorAll(".box *");
 	const boxes = document.querySelectorAll(".box");
+	const existingBoxElementsContent = document.querySelectorAll(".box *");
 
 	const errorMessage = document.querySelector(".error");
 	if (errorMessage != null) {
@@ -47,7 +56,6 @@ function insertFlights() {
 
 		getFlights()
 			.then((res) => {
-				console.log(res);
 				if (res != 0 && res != undefined) {
 					for (let flight of res) {
 						updateFlightInfo(flight, boxIndex, boxes);
@@ -196,26 +204,36 @@ function openMap() {
 	const mapCloseInstructions = document.querySelector(".mapCloseInstructions");
 	mapCloseInstructions.style.display = "flex";
 
-	const boxChildren = this.querySelectorAll("*");
-	console.log(boxChildren);
-	let storage = JSON.parse(sessionStorage.getItem("flights"));
-	console.log(storage);
-	storage.push({
-		elements: {
-			icon: boxChildren[0].outerHTML,
-			callsign: boxChildren[1].outerHTML,
-			from: boxChildren[2].outerHTML,
-			longitude: boxChildren[3].outerHTML,
-			latitude: boxChildren[4].outerHTML,
-			category: boxChildren[5].outerHTML,
-		},
-		data: {
-			longitudeValue: this.dataset.longitude,
-			latitudeValue: this.dataset.latitude,
-		},
+	storeFlightInfo(this);
+}
+
+function storeFlightInfo(box) {
+	const boxChildren = box.querySelectorAll("*");
+
+	let storage = JSON.parse(localStorage.getItem("flights"));
+
+	let contains = false;
+
+	contains = Array.from(storage).map((element) => {
+		if (element.elements.callsign == boxChildren[1].outerHTML) {
+			return true;
+		}
 	});
 
-	sessionStorage.setItem("flights", JSON.stringify(storage));
+	if (contains == false) {
+		storage.push({
+			elements: {
+				callsign: boxChildren[1].outerHTML,
+				from: boxChildren[2].outerHTML,
+			},
+			data: {
+				longitudeValue: box.dataset.longitude,
+				latitudeValue: box.dataset.latitude,
+			},
+		});
+
+		localStorage.setItem("flights", JSON.stringify(storage));
+	}
 }
 
 function closeMap() {
@@ -230,6 +248,78 @@ function closeMap() {
 		boxes[i].style.zIndex = 1;
 		boxes[i].style.scale = 1;
 	}
+
+	const historyBoxes = document.querySelectorAll(".historyBoxes");
+	Array.from(historyBoxes).map((box) => {
+		box.style.zIndex = 1;
+	});
+}
+
+function openHistory() {
+	historyButton.style.display = "none";
+	closeHistoryButton.style.display = "flex";
+
+	const boxes = document.querySelectorAll(".box");
+	Array.from(boxes).map((box) => box.remove());
+
+	historyHeading.style.display = "flex";
+
+	const historyBoxes = document.getElementsByClassName("historyBoxes");
+	Array.from(historyBoxes).map((box) => {
+		if (box != undefined) {
+			box.style.display = "grid";
+		}
+	});
+
+	const stored = JSON.parse(localStorage.getItem("flights"));
+
+	Array.from(stored).map((element) => createHistory(element));
+}
+
+function createHistory(element) {
+	const content = document.querySelector(".content");
+	const historyBox = document.createElement("div");
+	historyBox.className = "historyBoxes";
+	historyBox.style.display = "grid";
+	historyBox.dataset.longitude = element.data.longitudeValue;
+	historyBox.dataset.latitude = element.data.latitudeValue;
+
+	historyBox.innerHTML = element.elements.from + element.elements.callsign;
+
+	content.append(historyBox);
+
+	historyBox.addEventListener("click", openHistoryMap);
+}
+
+function openHistoryMap() {
+	const boxes = document.getElementsByClassName("historyBoxes");
+	for (let i = 0; i < boxes.length; i++) {
+		boxes[i].style.zIndex = 0;
+	}
+
+	const mymap = document.querySelector("#my-map");
+	mymap.style.display = "grid";
+
+	addMarker(map, this.dataset.latitude, this.dataset.longitude);
+
+	map.invalidateSize();
+	map.flyTo([this.dataset.latitude, this.dataset.longitude], 13);
+
+	const mapCloseInstructions = document.querySelector(".mapCloseInstructions");
+	mapCloseInstructions.style.display = "flex";
+}
+
+function closeHistory() {
+	const historyBoxes = document.getElementsByClassName("historyBoxes");
+	Array.from(historyBoxes).map((box) => {
+		if (box != undefined) {
+			box.remove();
+		}
+	});
+	historyHeading.style.display = "none";
+	closeHistoryButton.style.display = "none";
+	historyButton.style.display = "grid";
+	insertFlights();
 }
 
 export { insertFlights, closeMap };

@@ -4,7 +4,7 @@ async function getFlights() {
 	)
 		.then((res) => res.json())
 		.catch((err) => console.error(err));
-	if (allFlights != 0) {
+	if (allFlights != undefined) {
 		const filtered = allFlights.states.filter(getNonNulls);
 
 		return filtered.slice(0, 20);
@@ -14,7 +14,7 @@ async function getFlights() {
 }
 
 function getNonNulls(flight) {
-	if (flight[5] != null && flight[6] != null) {
+	if (flight[5] && flight[6] != null) {
 		return flight;
 	}
 }
