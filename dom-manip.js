@@ -1,8 +1,9 @@
 import "./flights.js";
 import "./map.js";
-import { mockFlights, getFlights } from "./flights.js";
 import { loadMap, addMarker } from "./map.js";
 import { storeFlightInfo } from "./storage.js";
+import { allFlights$, getNonNulls } from "./flights.js";
+import { concatMap } from "rxjs";
 
 const map = loadMap();
 
@@ -38,9 +39,9 @@ const flightCategories = [
 	"Line Obstacle",
 ];
 
-function insertFlights() {
-	const content = document.querySelector(".content");
-	const boxes = document.querySelectorAll(".box");
+function insertFlights(flights) {
+	const divContainingFlights = document.querySelector(".content");
+	const flightBoxes = document.querySelectorAll(".box");
 	const existingBoxElementsContent = document.querySelectorAll(".box *");
 
 	const errorMessage = document.querySelector(".error");
@@ -48,91 +49,31 @@ function insertFlights() {
 		errorMessage.remove();
 	}
 
-	if (boxes.length > 0) {
-		Array.from(existingBoxElementsContent).map((box) => box.remove());
+	if (flights != 0) {
+		if (flightBoxes.length > 0) {
+			Array.from(existingBoxElementsContent).map((box) => box.remove());
 
-		let boxIndex = 0;
-
-		getFlights()
-			.then((res) => {
-				if (res != 0 && res != undefined) {
-					for (let flight of res) {
-						updateFlightInfo(flight, boxIndex, boxes);
-						boxIndex++;
-					}
-				} else {
-					const boxesToClear = document.querySelectorAll(".content *");
-					Array.from(boxesToClear).map((box) => box.remove());
-
-					const noFlights = document.createElement("div");
-					noFlights.className = "error";
-					noFlights.innerHTML = `<h1>No flights to display</h1>`;
-					content.append(noFlights);
-				}
-			})
-			.catch((err) => {
-				const boxesToClear = document.querySelectorAll(".content *");
-				Array.from(boxesToClear).map((box) => box.remove());
-
-				console.error(err);
-				const noFlights = document.createElement("div");
-				noFlights.className = "error";
-				noFlights.innerHTML = `<h1>An error has occured while fetching flight data.</h1>`;
-				content.append(noFlights);
-			});
+			Array.from(flights).map((currentFlight, index) =>
+				updateFlightInfo(
+					currentFlight,
+					divContainingFlights,
+					flightBoxes[index]
+				)
+			);
+		} else {
+			Array.from(flights).map((currentFlight) =>
+				addFlightInfo(currentFlight, divContainingFlights)
+			);
+		}
 	} else {
-		getFlights()
-			.then((res) => {
-				if (res != 0 && res != undefined) {
-					for (let flight of res) {
-						addFlightInfo(flight, content);
-					}
-				} else {
-					const noFlights = document.createElement("div");
-					noFlights.className = "error";
-					noFlights.innerHTML = `<h1>No flights to display</h1>`;
-					content.append(noFlights);
-				}
-			})
-			.catch((err) => {
-				console.error(err);
-				const noFlights = document.createElement("div");
-				noFlights.className = "error";
-				noFlights.innerHTML = `<h1>An error has occured while fetching flight data.</h1>`;
-				content.append(noFlights);
-			});
+		if (flightBoxes.length != 0)
+			Array.from(flightBoxes).map((box) => box.remove());
+
+		const noFlights = document.createElement("div");
+		noFlights.className = "error";
+		noFlights.innerHTML = `<h1>No flights to display</h1>`;
+		divContainingFlights.append(noFlights);
 	}
-	// for when they are unavailable
-	// let flights = mockFlights();
-	// for (let flight of flights) {
-	// 	if (flight[5] != null || flight[6] != null) {
-	// 		const boxes = document.createElement("div");
-	// 		boxes.className = "box";
-	// 		boxes.setAttribute("focus", false);
-
-	// 		const icon = flight[8]
-	// 			? `<i class="fa-solid fa-plane-departure" style="color: blue"></i>`
-	// 			: `<i class="fa-solid fa-plane-arrival" style="color: red"></i>`;
-	// 		const callsign = flight[1];
-	// 		const from = flight[2];
-	// 		const longitude = flight[5];
-	// 		const latitude = flight[6];
-	// 		const category = flight[17];
-
-	// 		boxes.innerHTML =
-	// 			icon +
-	// 			`<h3 class="callsign">Callsign: ${callsign}</h3>
-	// 			<h3 class="from">From: ${from}</h3>
-	// 			<p class="long">Longitude: ${longitude}</p>
-	// 			<p class="lat">Latitude: ${latitude}</p>
-	// 			<p class="cat">Category: ${flightCategories[category]}</p>`;
-	// 		boxes.dataset.longitude = longitude;
-	// 		boxes.dataset.latitude = latitude;
-
-	// 		boxes.addEventListener("click", openMap);
-	// 		content.append(boxes);
-	// 	}
-	// }
 }
 
 function updateFlightInfo(flight, boxIndex, boxes) {
@@ -289,7 +230,15 @@ function closeHistory() {
 	historyHeading.style.display = "none";
 	closeHistoryButton.style.display = "none";
 	historyButton.style.display = "grid";
-	insertFlights();
+
+	concatMap(
+		allFlights$.subscribe({
+			next: (res) => {
+				if (res == 0) insertFlights(0);
+				insertFlights(res.states.filter(getNonNulls).slice(0, 20));
+			},
+		})
+	);
 }
 
 export { insertFlights, closeMap };
