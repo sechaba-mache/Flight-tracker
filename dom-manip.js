@@ -54,11 +54,7 @@ function insertFlights(flights) {
 			Array.from(existingBoxElementsContent).map((box) => box.remove());
 
 			Array.from(flights).map((currentFlight, index) =>
-				updateFlightInfo(
-					currentFlight,
-					divContainingFlights,
-					flightBoxes[index]
-				)
+				updateFlightInfo(currentFlight, flightBoxes[index])
 			);
 		} else {
 			Array.from(flights).map((currentFlight) =>
@@ -76,7 +72,7 @@ function insertFlights(flights) {
 	}
 }
 
-function updateFlightInfo(flight, boxIndex, boxes) {
+function updateFlightInfo(flight, boxes) {
 	const icon = flight[8]
 		? `<i class="fa-solid fa-plane-departure" style="color: blue"></i>`
 		: `<i class="fa-solid fa-plane-arrival" style="color: red"></i>`;
@@ -86,17 +82,17 @@ function updateFlightInfo(flight, boxIndex, boxes) {
 	const latitude = flight[6];
 	const category = flight[17];
 
-	boxes[boxIndex].innerHTML =
+	boxes.innerHTML =
 		icon +
 		`<h3 class="callsign">Callsign: ${callsign}</h3>
 	<h3 class="from">From: ${from}</h3>
 	<p class="long">Longitude: ${longitude}</p>
 	<p class="lat">Latitude: ${latitude}</p>
 	<p class="cat">Category: ${flightCategories[category]}</p>`;
-	boxes[boxIndex].dataset.longitude = longitude;
-	boxes[boxIndex].dataset.latitude = latitude;
+	boxes.dataset.longitude = longitude;
+	boxes.dataset.latitude = latitude;
 
-	boxes[boxIndex].addEventListener("click", openMap);
+	boxes.addEventListener("click", openMap);
 }
 
 function addFlightInfo(flight, content) {
