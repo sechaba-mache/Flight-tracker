@@ -3,7 +3,7 @@ import "./map.js";
 import { loadMap, addMarker } from "./map.js";
 import { storeFlightInfo } from "./storage.js";
 import { allFlights$, getNonNulls } from "./flights.js";
-import { concatMap } from "rxjs";
+import { subscription } from "./main.js";
 
 const map = loadMap();
 
@@ -38,6 +38,8 @@ const flightCategories = [
 	"Cluster Obstacle",
 	"Line Obstacle",
 ];
+
+let newSub = undefined;
 
 function insertFlights(flights) {
 	const divContainingFlights = document.querySelector(".content");
@@ -163,6 +165,11 @@ function closeMap() {
 }
 
 function openHistory() {
+	if (newSub != undefined) {
+		newSub.unsubscribe();
+	} else {
+		subscription.unsubscribe();
+	}
 	historyButton.style.display = "none";
 	closeHistoryButton.style.display = "flex";
 
@@ -227,14 +234,12 @@ function closeHistory() {
 	closeHistoryButton.style.display = "none";
 	historyButton.style.display = "grid";
 
-	concatMap(
-		allFlights$.subscribe({
-			next: (res) => {
-				if (res == 0) insertFlights(0);
-				insertFlights(res.states.filter(getNonNulls).slice(0, 20));
-			},
-		})
-	);
+	newSub = allFlights$.subscribe({
+		next: (res) => {
+			if (res == 0) insertFlights(0);
+			insertFlights(res.states.filter(getNonNulls).slice(0, 20));
+		},
+	});
 }
 
 export { insertFlights, closeMap };

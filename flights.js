@@ -23,5 +23,9 @@ export const allFlights$ = timer(0, 30000).pipe(
 				return 0;
 			})
 		)
-	)
+	),
+	catchError((err) => {
+		console.error(err);
+		return 0;
+	})
 );

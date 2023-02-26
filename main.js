@@ -3,7 +3,7 @@ import { allFlights$, getNonNulls } from "./flights.js";
 
 import "./style.scss";
 
-allFlights$.subscribe({
+export const subscription = allFlights$.subscribe({
 	next: (res) => {
 		if (res == 0) insertFlights(0);
 		insertFlights(res.states.filter(getNonNulls).slice(0, 20));
