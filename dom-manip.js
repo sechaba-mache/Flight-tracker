@@ -14,7 +14,6 @@ const closeHistoryButton = document.querySelector(".closeHistoryButton");
 closeHistoryButton.addEventListener("click", closeHistory);
 
 let historyHeading = document.querySelector(".historyHeading");
-historyHeading.style.display = "none";
 
 const flightCategories = [
 	"No information",
