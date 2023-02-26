@@ -1,7 +1,7 @@
 import { insertFlights } from "./dom-manip.js";
 import { allFlights$, getNonNulls } from "./flights.js";
 
-import "./style.scss";
+import "./dist/style.css";
 
 export const subscription = allFlights$.subscribe({
 	next: (res) => {
