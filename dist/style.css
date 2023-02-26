@@ -828,3 +828,29 @@ video {
   grid-area: 1 / 2 / 2 / 3;
   height: 100%;
 }
+
+@media screen and (min-width: 768px) {
+  .content .box {
+    height: 20vh;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .content .box {
+    width: 25vw;
+    height: 20vh;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .content .box {
+    width: 28vw;
+    height: 25vh;
+  }
+}
+
+@media screen and (min-width: 1536px) {
+  .content .box {
+    height: 30vh;
+  }
+}
