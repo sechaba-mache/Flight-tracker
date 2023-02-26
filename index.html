@@ -12,32 +12,37 @@
   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
 
+  <link rel="stylesheet" href="./dist/style.css">
   <title>Flight tracker</title>
 </head>
 
-<body>
+<body class="m-0 flex flex-wrap flex-grow-0 bg-aliceblue font-sans">
 
-  <div class="logo">
-    <div class="history">
-      <button class="historyButton">History</button>
-      <button class="closeHistoryButton">Close</button>
+  <div
+    class="logo fixed w-screen h-[8vh] bg-primaryColor z-[2] flex justify-center items-center flex-grow-0 flex-shrink-0">
+    <div class="history fixed left-0 m-[50px]">
+      <button
+        class="historyButton w-[70px] h-6 rounded-[10px] bg-secondaryColor text-primaryColor cursor-pointer justify-center items-center">History</button>
+      <button
+        class="closeHistoryButton hidden w-[70px] h-6 rounded-[10px] bg-secondaryColor text-primaryColor cursor-pointer justify-center items-center">Close</button>
     </div>
-    <img src="/Assets/wheres-elon-logo_4_-removebg-preview(1).png" alt="Plane" class="plane">
+    <img src="/Assets/wheres-elon-logo_4_-removebg-preview(1).png" alt="Plane" class="plane w-20 h-[90%]">
     <img src="/Assets/wheres-elon-logo_4_-removebg-preview(2).png" alt="Where's Elon? It's a play on Where's Waldo."
-      class="name">
+      class="name w-[200px] h-full">
   </div>
 
-  <div class="content">
-    <h3 class="historyHeading"
-      style="display: flex; justify-content: center; margin: 20px 48% 0 48%; text-align: center;">History page
+  <div class="content mt-[8vh] w-screen flex flex-wrap content-start justify-between opacity-100">
+    <h3 class="historyHeading hidden justify-center mt-5 mr-[48%] mb-0 ml-[48%] text-center">History page
     </h3>
   </div>
 
-  <div class="grid">
-    <div id="my-map">
+  <!-- the className "grid" might be a problem specifies styling in tailwind but was using as className -->
+  <div class="grid fixed mt-[8vh] w-full h-[92vh] grid-cols-myGrid grid-rows-myGrid">
+    <div id="my-map" class="hidden col-map row-map opacity-100 z-[2] rounded-xl overflow-hidden">
 
     </div>
-    <div class="mapCloseInstructions">
+    <div
+      class="mapCloseInstructions hidden col-mapInstructions row-mapInstructions justify-center items-center opacity-60">
       <h3>Click On The Map To Close It.</h3>
     </div>
   </div>

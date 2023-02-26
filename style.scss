@@ -68,13 +68,14 @@ html {
 		justify-content: space-between;
 		opacity: 1;
 
+		//From here until...
 		.error {
 			display: flex;
 			justify-content: center;
 			width: 100vw;
 		}
 
-		.box {
+		/ .box {
 			display: grid;
 			z-index: 1;
 			grid-template-columns: 1fr 1fr;
@@ -170,6 +171,7 @@ html {
 				height: 100%;
 			}
 		}
+		//here apply styling in js
 	}
 
 	.grid {
