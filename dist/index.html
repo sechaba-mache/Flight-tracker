@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://kit.fontawesome.com/1ff1c38577.js" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+
+  
+  <title>Flight tracker</title>
+  <script type="module" crossorigin src="/assets/index-882dba25.js"></script>
+  <link rel="stylesheet" href="/assets/index-b46bfb07.css">
+</head>
+
+<body class="m-0 flex flex-wrap flex-grow-0 bg-aliceblue font-sans">
+
+  <div
+    class="logo fixed w-screen h-[8vh] bg-primaryColor z-[2] flex justify-center items-center flex-grow-0 flex-shrink-0">
+    <div class="history fixed left-0 m-[50px]">
+      <button
+        class="historyButton w-[70px] h-6 rounded-[10px] bg-secondaryColor text-primaryColor cursor-pointer justify-center items-center">History</button>
+      <button
+        class="closeHistoryButton hidden w-[70px] h-6 rounded-[10px] bg-secondaryColor text-primaryColor cursor-pointer justify-center items-center">Close</button>
+    </div>
+    <img src="/Assets/wheres-elon-logo_4_-removebg-preview(1).png" alt="Plane" class="plane w-20 h-[90%]">
+    <img src="/Assets/wheres-elon-logo_4_-removebg-preview(2).png" alt="Where's Elon? It's a play on Where's Waldo."
+      class="name w-[200px] h-full">
+  </div>
+
+  <div class="content mt-[8vh] w-screen flex flex-wrap content-start justify-between opacity-100">
+    <h3 class="historyHeading hidden justify-center mt-5 mr-[48%] mb-0 ml-[48%] text-center">History page
+    </h3>
+  </div>
+
+  <!-- the className "grid" might be a problem specifies styling in tailwind but was using as className -->
+  <div class="grid fixed mt-[8vh] w-full h-[92vh] grid-cols-myGrid grid-rows-myGrid">
+    <div id="my-map" class="hidden col-map row-map opacity-100 z-[2] rounded-xl overflow-hidden">
+
+    </div>
+    <div
+      class="mapCloseInstructions hidden col-mapInstructions row-mapInstructions justify-center items-center opacity-60">
+      <h3>Click On The Map To Close It.</h3>
+    </div>
+  </div>
+
+
+  
+</body>
+
+</html>
