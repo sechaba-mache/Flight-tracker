@@ -1,0 +1,30 @@
+module.exports = {
+	env: {
+		browser: true,
+		es2021: true,
+	},
+	extends: ["airbnb-base", "airbnb-typescript/base"],
+	overrides: [],
+	parserOptions: {
+		ecmaVersion: "latest",
+		sourceType: "module",
+		project: "./tsconfig.json",
+	},
+	rules: {
+		"@typescript-eslint/quotes": "off",
+		"@typescript-eslint/indent": "off",
+		"no-param-reassign": "off",
+		"@typescript-eslint/no-use-before-define": "off",
+		curly: "off",
+		"prefer-template": "off",
+		"implicit-arrow-linebreak": "off",
+		"function-paren-newline": "off",
+		"arrow-body-style": "off",
+		"prefer-destructuring": "off",
+		"padded-blocks": "off",
+		"array-callback-return": "off",
+		"object-curly-newline": "off",
+		"no-plusplus": "off",
+		"import/no-cycle": "off",
+	},
+};

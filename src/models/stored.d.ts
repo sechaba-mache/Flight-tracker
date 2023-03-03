@@ -1,4 +1,4 @@
-export interface storage {
+export interface IStorage {
     elements: {
         callsign: string,
         from: string,

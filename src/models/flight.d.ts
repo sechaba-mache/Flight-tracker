@@ -24,7 +24,7 @@ export interface IFlight {
     category: number | null;
 }
 
-export interface ofError {
+export interface IOfError {
     ok: boolean;
     message: string;
     states: null;
