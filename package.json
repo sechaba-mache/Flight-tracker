@@ -7,11 +7,20 @@
     "dev": "vite",
     "build": "tsc && vite build && npx tailwindcss -i ./style.css -o ./dist/style.css",
     "preview": "vite preview",
-    "tailwind": "npx tailwindcss -i ./style.css -o ./dist/style.css"
+    "tailwind": "npx tailwindcss -i ./style.css -o ./dist/style.css",
+    "lint": "npx eslint . --ext .ts,.tsx"
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.1",
     "@types/rx": "^4.1.2",
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "@typescript-eslint/parser": "^5.54.0",
+    "eslint": "^8.35.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-standard-with-typescript": "^34.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1",
     "prettier": "^2.8.4",
     "prettier-plugin-tailwindcss": "^0.2.3",
     "sass": "^1.58.0",
